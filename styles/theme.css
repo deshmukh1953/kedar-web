@@ -1,0 +1,100 @@
+/* ==========================================================================
+   NexusIntern Portal - Premium Design System Tokens & Base Styles
+   Theme: Pure Vivid Orange & Deep Black (High Contrast Cyber / Luxe)
+   Role Contexts: Individual Student, Group Track, Trainer Code Review, Admin
+   Duration Tiers: 1 Month, 2 Months, 6 Months
+   ========================================================================== */
+
+:root {
+  /* Surface & Base - Light Mode Fallbacks */
+  --bg-canvas: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F5F9;
+  --border-subtle: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --text-primary: #0A0A0A;
+  --text-secondary: #404040;
+  --text-muted: #737373;
+
+  /* Brand Accents */
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --primary-light: #FFF7ED;
+  
+  /* Role Specific Colors */
+  --role-individual: #F97316;     /* Vivid Orange */
+  --role-group: #FB923C;          /* Light Amber Orange */
+  --role-trainer: #EA580C;        /* Deep Rust Orange / Approver */
+  --role-admin: #C2410C;          /* Dark Blaze Orange */
+
+  /* Duration Tiers */
+  --duration-1m: #FB923C;         /* Sprint */
+  --duration-2m: #F97316;         /* Core */
+  --duration-6m: #EA580C;         /* Industrial Capstone */
+
+  /* Code Approval Status */
+  --status-draft: #737373;
+  --status-pending: #F97316;
+  --status-changes: #FB923C;
+  --status-approved: #22C55E;
+  --status-rejected: #EF4444;
+}
+
+/* Dark Mode Tokens (Pitch Black & Electric Orange) */
+.dark, :root[data-theme="dark"] {
+  --bg-canvas: #000000;
+  --bg-surface: #0D0D0D;
+  --bg-surface-elevated: #171717;
+  --border-subtle: rgba(249, 115, 22, 0.2);
+  --border-strong: rgba(249, 115, 22, 0.45);
+  --text-primary: #FFFFFF;
+  --text-secondary: #D4D4D4;
+  --text-muted: #737373;
+
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --primary-light: rgba(249, 115, 22, 0.15);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F97316;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(13, 13, 13, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(249, 115, 22, 0.25);
+}
+
+/* Code Diff Highlighting Styles */
+.diff-line-added {
+  background-color: rgba(249, 115, 22, 0.14);
+  color: #FB923C;
+  border-left: 2px solid #F97316;
+}
+
+.diff-line-deleted {
+  background-color: rgba(239, 68, 68, 0.14);
+  color: #F87171;
+  border-left: 2px solid #EF4444;
+}
+
+.diff-gutter {
+  color: #737373;
+  user-select: none;
+  font-family: 'JetBrains Mono', monospace;
+}

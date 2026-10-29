@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusIntern - Premium Internship Portal Theme</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/theme.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#EEF2FF',
+              500: '#6366F1',
+              600: '#4F46E5',
+              900: '#1E1B4B'
+            },
+            trainer: {
+              500: '#10B981',
+              600: '#059669',
+            },
+            group: {
+              500: '#8B5CF6',
+              600: '#7C3AED',
+            },
+            duration: {
+              '1m': '#06B6D4',
+              '2m': '#6366F1',
+              '6m': '#8B5CF6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#090D16] text-[#F8FAFC] min-h-screen transition-colors duration-200 antialiased selection:bg-indigo-500 selection:text-white" id="app-body">
+
+  <!-- Top Global Header / Navigation -->
+  <header class="border-b border-slate-800/80 bg-[#0F172A]/90 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Brand Identity -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">NexusIntern</span>
+            <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">v2.5 PRO</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-none">Online Internship & Code Review Platform</p>
+        </div>
+      </div>
+
+      <!-- Navigation: Explore vs Workspaces -->
+      <div class="hidden lg:flex items-center space-x-2">
+        <button onclick="setView('explore')" id="nav-btn-explore" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400/50">
+          <span>🌟 Explore Tracks & Enroll</span>
+        </button>
+
+        <!-- Live Role Switcher (Interactive Workspaces) -->
+        <div class="flex items-center bg-[#1E293B]/70 p-1 rounded-xl border border-slate-700/60 shadow-inner">
+          <button onclick="setRole('individual')" id="role-btn-individual" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+            <span>👨‍💻 Solo</span>
+          </button>
+          <button onclick="setRole('group')" id="role-btn-group" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+            <span>👥 Squad</span>
+          </button>
+          <button onclick="setRole('trainer')" id="role-btn-trainer" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+            <span>🧑‍🏫 Trainer</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          </button>
+          <button onclick="setRole('admin')" id="role-btn-admin" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+            <span>🛡️ Admin</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Action & Palette Controls -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Big High-Converting Enroll Button -->
+        <button onclick="openEnrollModal(2, 'individual')" class="px-3.5 sm:px-4 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 shadow-lg shadow-emerald-500/25 transition transform hover:scale-105 flex items-center space-x-1.5">
+          <span>⚡ Enroll Now</span>
+        </button>
+
+        <!-- Portal Login Modal Trigger -->
+        <button onclick="toggleLoginModal()" class="hidden sm:flex px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition items-center space-x-1.5 shadow-sm">
+          <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          <span class="hidden sm:inline">Portal Login</span>
+        </button>
+
+        <!-- Palette Token Drawer Trigger -->
+        <button onclick="togglePaletteModal()" class="hidden md:flex p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition items-center" title="Color Guide">
+          <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+          </svg>
+          <span class="hidden sm:inline">Color Guide</span>
+        </button>
+
+        <!-- Light / Dark Mode Toggle -->
+        <button onclick="toggleThemeMode()" id="theme-toggle-btn" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/80 transition" title="Toggle Light/Dark Theme">
+          <svg id="moon-icon" class="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="sun-icon" class="w-4 h-4 text-amber-400 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+        <!-- Current User Avatar Profile -->
+        <div class="flex items-center space-x-2 pl-2 border-l border-slate-700/60">
+          <img id="user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" class="w-8 h-8 rounded-full ring-2 ring-indigo-500/50 object-cover" alt="User Avatar">
+          <div class="hidden lg:block text-left">
+            <div id="user-name" class="text-xs font-semibold leading-tight text-white">Aarav Sharma</div>
+            <div id="user-role-badge" class="text-[10px] text-indigo-400 font-mono">Individual Intern</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile Subheader for View & Role Switching -->
+    <div class="lg:hidden flex overflow-x-auto px-4 py-2 bg-slate-900 border-t border-slate-800 space-x-2 text-xs">
+      <button onclick="setView('explore')" id="m-btn-explore" class="px-3 py-1 rounded-md bg-indigo-600 text-white font-bold whitespace-nowrap">🌟 Explore Tracks</button>
+      <button onclick="setRole('individual')" id="m-btn-individual" class="px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap">👨‍💻 Solo Workspace</button>
+      <button onclick="setRole('group')" id="m-btn-group" class="px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap">👥 Squad Track</button>
+      <button onclick="setRole('trainer')" id="m-btn-trainer" class="px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap">🧑‍🏫 Trainer</button>
+      <button onclick="setRole('admin')" id="m-btn-admin" class="px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap">🛡️ Admin</button>
+    </div>
+  </header>
+
+  <!-- Duration Selector Sub-Bar -->
+  <section id="duration-subbar" class="hidden border-b border-slate-800/60 bg-[#0B1120] py-3 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Internship Duration Tracks:</span>
+        <span class="text-xs text-slate-500">• Tailored milestones & expectations</span>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <!-- 1 Month Track -->
+        <button onclick="setDuration(1)" id="duration-btn-1" class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 border-slate-700 bg-slate-800/80 text-slate-300 hover:border-cyan-500">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span>1 Month</span>
+          <span class="text-[10px] opacity-75 font-normal">(Fast-Track Sprint)</span>
+        </button>
+
+        <!-- 2 Month Track (Active by default) -->
+        <button onclick="setDuration(2)" id="duration-btn-2" class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 border-indigo-500 bg-indigo-500/15 text-indigo-300 ring-1 ring-indigo-500">
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+          <span>2 Months</span>
+          <span class="text-[10px] opacity-75 font-normal">(Standard Core)</span>
+        </button>
+
+        <!-- 6 Month Track -->
+        <button onclick="setDuration(6)" id="duration-btn-6" class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 border-slate-700 bg-slate-800/80 text-slate-300 hover:border-purple-500">
+          <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+          <span>6 Months</span>
+          <span class="text-[10px] opacity-75 font-normal">(Industrial Capstone)</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notification Banner for Demo Interactivity -->
+  <div id="toast-banner" class="hidden fixed bottom-6 right-6 z-50 bg-[#1E293B] border border-emerald-500/40 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 transition-all duration-300">
+    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">✓</div>
+    <div>
+      <div id="toast-title" class="text-xs font-bold text-emerald-300">Action Completed</div>
+      <div id="toast-message" class="text-[11px] text-slate-300">Your code milestone was updated.</div>
+    </div>
+  </div>
+
+  <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- VIEW 0: STUDENT ENROLLMENT & TRACK EXPLORER (CONVERSION HUB) -->
+    <div id="view-explore" class="space-y-16">
+      
+      <!-- 1. HERO SECTION -->
+      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#0F172A] via-[#0B1120] to-[#090D16] border border-indigo-500/30 p-8 sm:p-12 lg:p-16 shadow-2xl">
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative max-w-4xl mx-auto text-center space-y-6">
+          <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>🔥 Autumn 2026 Batch Enrollment Now Live</span>
+            <span class="text-slate-500">•</span>
+            <span class="text-cyan-400 font-mono">1M, 2M, 6M Options Available</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            Stop Watching Tutorials. <br class="hidden sm:inline" />
+            <span class="bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+              Write Real Code & Get Approved
+            </span> by Industry Senior Architects.
+          </h1>
+
+          <p class="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            The only online internship portal where senior engineers inspect your GitHub pull requests, review syntax line-by-line, run automated CI tests, and grant verified milestone credentials.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <button onclick="openEnrollModal(2, 'individual')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-extrabold text-sm tracking-wide shadow-xl shadow-indigo-600/30 transition transform hover:-translate-y-1 flex items-center justify-center space-x-2">
+              <span>🚀 Apply Now — Instant Enrollment</span>
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+
+            <button onclick="setRole('trainer')" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-sm transition flex items-center justify-center space-x-2">
+              <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <span>See How Trainers Check Code</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-slate-800/80">
+            <div class="p-3">
+              <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">1,428+</div>
+              <div class="text-xs text-slate-400 mt-0.5">Students Enrolled</div>
+            </div>
+            <div class="p-3">
+              <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">&lt; 24 hrs</div>
+              <div class="text-xs text-slate-400 mt-0.5">Trainer Review SLA</div>
+            </div>
+            <div class="p-3">
+              <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 font-mono">100%</div>
+              <div class="text-xs text-slate-400 mt-0.5">Real Git Pull Requests</div>
+            </div>
+            <div class="p-3">
+              <div class="text-2xl sm:text-3xl font-extrabold text-purple-400 font-mono">94.8%</div>
+              <div class="text-xs text-slate-400 mt-0.5">Placement & Defense Pass</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. HIRING TECH PARTNERS -->
+      <section class="text-center space-y-4">
+        <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+          Alumni Working At Top Global Tech Companies
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 opacity-75">
+          <div class="flex items-center space-x-2 text-slate-300 font-bold text-sm sm:text-base">
+            <div class="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-red-500"></div>
+            <span>Google Cloud</span>
+          </div>
+          <div class="flex items-center space-x-2 text-slate-300 font-bold text-sm sm:text-base">
+            <div class="w-3 h-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500"></div>
+            <span>Amazon Web Services</span>
+          </div>
+          <div class="flex items-center space-x-2 text-slate-300 font-bold text-sm sm:text-base">
+            <div class="w-3 h-3 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+            <span>Microsoft Azure</span>
+          </div>
+          <div class="flex items-center space-x-2 text-slate-300 font-bold text-sm sm:text-base">
+            <div class="w-3 h-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+            <span>Stripe</span>
+          </div>
+          <div class="flex items-center space-x-2 text-slate-300 font-bold text-sm sm:text-base">
+            <div class="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-indigo-600"></div>
+            <span>Atlassian</span>
+          </div>
+          <div class="flex items-center space-x-2 text-slate-300 font-bold text-sm sm:text-base">
+            <div class="w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"></div>
+            <span>Razorpay</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. DURATION TIERS: 1, 2, 6 MONTHS -->
+      <section class="space-y-8">
+        <div class="text-center space-y-3">
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <span>⏱️ Flexible Timeline Architecture</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Choose Your Internship Duration
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
+            Whether you have 4 weeks during semester breaks or a full 6-month industrial capstone semester, our curriculum adapts to your schedule.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- 1 Month Sprint -->
+          <div class="rounded-3xl bg-[#0F172A] border border-cyan-500/40 p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-cyan-400">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold border bg-cyan-500/20 text-cyan-300 border-cyan-500/30 uppercase tracking-wider">
+                  ⚡ QUICK RESUME BOOSTER
+                </span>
+                <span class="text-xs font-mono text-slate-400 font-semibold">4 Weeks</span>
+              </div>
+              <h3 class="text-xl font-extrabold text-white">1 Month Track</h3>
+              <div class="text-xs text-indigo-300 font-medium mt-0.5">Fast-Track Sprint</div>
+              <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                Master industry Git branching, REST API architecture, JWT authentication, and deploy serverless functions to the cloud.
+              </p>
+              <div class="mt-4 pt-4 border-t border-slate-800/80 space-y-2 text-xs">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Key Deliverables:</div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Private GitHub Repo & 4 Weekly Code Sprints</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Direct 1-on-1 Code Reviews from Senior Trainers</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>OWASP Top-10 API Security Compliance Checks</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Verifiable Digital Certificate & Digital Badge</span></div>
+              </div>
+              <div class="mt-4 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
+                <strong class="text-slate-300">Best for:</strong> 1st & 2nd year students, semester breaks, hackathon prep
+              </div>
+            </div>
+            <div class="pt-6 mt-6 border-t border-slate-800">
+              <button onclick="openEnrollModal(1, 'individual')" class="w-full py-3 rounded-xl font-bold text-xs tracking-wide transition shadow-lg bg-cyan-600 hover:bg-cyan-500 text-white shadow-cyan-600/30">
+                Enroll in 1 Month Track
+              </button>
+            </div>
+          </div>
+
+          <!-- 2 Months Core Architecture (Popular) -->
+          <div class="rounded-3xl bg-[#0F172A] border border-indigo-500/70 p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-400 ring-1 ring-indigo-500/40 relative">
+            <span class="absolute -top-3 right-6 px-3 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500 text-white uppercase tracking-wider shadow-md">
+              POPULAR ⭐
+            </span>
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold border bg-indigo-500/20 text-indigo-300 border-indigo-500/30 uppercase tracking-wider">
+                  ⭐ FULL-STACK MASTERY
+                </span>
+                <span class="text-xs font-mono text-slate-400 font-semibold">8 Weeks</span>
+              </div>
+              <h3 class="text-xl font-extrabold text-white">2 Months Track</h3>
+              <div class="text-xs text-indigo-300 font-medium mt-0.5">Standard Core Architecture</div>
+              <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                Deep dive into relational database modeling, Redis caching, microservices, containerization, and automated CI/CD pipelines.
+              </p>
+              <div class="mt-4 pt-4 border-t border-slate-800/80 space-y-2 text-xs">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Key Deliverables:</div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Everything in 1 Month Sprint Track</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Redis Sliding-Window Rate Limiting & Caching</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Docker Containerization & GitHub Actions CI/CD</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Official Trainer Signed Letter of Recommendation (LOR)</span></div>
+              </div>
+              <div class="mt-4 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
+                <strong class="text-slate-300">Best for:</strong> 3rd year students, pre-final internships, academic credits
+              </div>
+            </div>
+            <div class="pt-6 mt-6 border-t border-slate-800">
+              <button onclick="openEnrollModal(2, 'individual')" class="w-full py-3 rounded-xl font-bold text-xs tracking-wide transition shadow-lg bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white shadow-indigo-600/30">
+                Enroll in 2 Months Track
+              </button>
+            </div>
+          </div>
+
+          <!-- 6 Months Industrial Capstone -->
+          <div class="rounded-3xl bg-[#0F172A] border border-purple-500/40 p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-400">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold border bg-purple-500/20 text-purple-300 border-purple-500/30 uppercase tracking-wider">
+                  🚀 PLACEMENT & ENTERPRISE
+                </span>
+                <span class="text-xs font-mono text-slate-400 font-semibold">24 Weeks</span>
+              </div>
+              <h3 class="text-xl font-extrabold text-white">6 Months Track</h3>
+              <div class="text-xs text-indigo-300 font-medium mt-0.5">Industrial Capstone</div>
+              <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                End-to-end industrial software engineering: Kubernetes orchestration, high-concurrency stress testing, and corporate placements.
+              </p>
+              <div class="mt-4 pt-4 border-t border-slate-800/80 space-y-2 text-xs">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Key Deliverables:</div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Everything in 2 Months Core Track</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Kubernetes Helm Chart Deployment on AWS EKS</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Distributed Locking & Kafka Message Queues</span></div>
+                <div class="flex items-start space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span>Mock Technical Interviews & Direct Referrals</span></div>
+              </div>
+              <div class="mt-4 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
+                <strong class="text-slate-300">Best for:</strong> Final year capstone, career switchers, job seekers
+              </div>
+            </div>
+            <div class="pt-6 mt-6 border-t border-slate-800">
+              <button onclick="openEnrollModal(6, 'individual')" class="w-full py-3 rounded-xl font-bold text-xs tracking-wide transition shadow-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-purple-600/30">
+                Enroll in 6 Months Track
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. DUAL MODALITY: SOLO VS SQUAD (GROUP TRACK) -->
+      <section class="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-indigo-500/30 p-8 sm:p-12 shadow-xl space-y-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Two Ways to Learn</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Enroll Solo or Form a Squad with Friends</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
+              Choose solo focus for deep personal learning, or bring your classmates to simulate a real Agile software engineering team.
+            </p>
+          </div>
+
+          <div class="flex bg-slate-900 p-1.5 rounded-2xl border border-slate-700">
+            <button onclick="togglePreviewModality('individual')" id="modality-btn-indiv" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-cyan-600 text-white shadow-md">
+              👨‍💻 Solo Intern
+            </button>
+            <button onclick="togglePreviewModality('group')" id="modality-btn-group" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white">
+              👥 Squad Track (2-4 Members)
+            </button>
+          </div>
+        </div>
+
+        <div id="modality-content-indiv" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-5 rounded-2xl bg-[#0F172A] border border-cyan-500/30 space-y-2">
+            <div class="text-2xl">🔒</div>
+            <h4 class="text-sm font-bold text-white">Dedicated Private Repo</h4>
+            <p class="text-xs text-slate-400">
+              Your own GitHub repository. Build your personal commit history and showcase genuine contributions to recruiters.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#0F172A] border border-cyan-500/30 space-y-2">
+            <div class="text-2xl">🧑‍🏫</div>
+            <h4 class="text-sm font-bold text-white">1-on-1 Trainer Mentorship</h4>
+            <p class="text-xs text-slate-400">
+              Every line of your code is reviewed directly by your assigned senior trainer with personalized improvement feedback.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#0F172A] border border-cyan-500/30 space-y-2">
+            <div class="text-2xl">⚡</div>
+            <h4 class="text-sm font-bold text-white">Self-Paced Velocity</h4>
+            <p class="text-xs text-slate-400">
+              Finish milestones ahead of schedule if you have extra time during exams or holidays.
+            </p>
+          </div>
+        </div>
+
+        <div id="modality-content-group" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-5 rounded-2xl bg-[#0F172A] border border-purple-500/30 space-y-2">
+            <div class="text-2xl">🤝</div>
+            <h4 class="text-sm font-bold text-white">Real Agile Squad Experience</h4>
+            <p class="text-xs text-slate-400">
+              Learn Git feature branching, pull request reviews between team members, and merge conflict resolution.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#0F172A] border border-purple-500/30 space-y-2">
+            <div class="text-2xl">🚀</div>
+            <h4 class="text-sm font-bold text-white">Build a Giant Capstone Project</h4>
+            <p class="text-xs text-slate-400">
+              Split complex microservices between frontend, backend, database, and DevOps to deliver an enterprise-grade app.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#0F172A] border border-purple-500/30 space-y-2">
+            <div class="text-2xl">🎁</div>
+            <h4 class="text-sm font-bold text-white">25% Team Perk & Joint LOR</h4>
+            <p class="text-xs text-slate-400">
+              Enroll with 2 to 4 peers with squad discount and earn a collaborative engineering accreditation certificate.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-center pt-2">
+          <button onclick="openEnrollModal(2, currentPreviewModality)" class="px-8 py-3.5 rounded-2xl font-extrabold text-xs tracking-wide text-white transition shadow-xl bg-indigo-600 hover:bg-indigo-500 shadow-indigo-600/30">
+            Start Enrollment Application →
+          </button>
+        </div>
+      </section>
+
+      <!-- 5. VERIFIABLE CERTIFICATE PREVIEW -->
+      <section class="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 p-8 sm:p-12 shadow-xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div class="space-y-4">
+            <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Career Accreditation</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Earn a Tamper-Proof Credential Recruiters Trust</h2>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Every milestone is tracked cryptographically. Upon graduation, receive a verifiable credential with an embedded QR code linking directly to your verified GitHub pull requests and test reports.
+            </p>
+            <div class="space-y-2.5 pt-2 text-xs">
+              <div class="flex items-center space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span><strong>1-Click LinkedIn Integration</strong>: Directly attach credential ID to your LinkedIn profile.</span></div>
+              <div class="flex items-center space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span><strong>Signed Letter of Recommendation (LOR)</strong>: Mentors provide written references for master's applications or job interviews.</span></div>
+              <div class="flex items-center space-x-2 text-slate-200"><span class="text-emerald-400 font-bold">✓</span><span><strong>University Credit Accepted</strong>: Recognized by major academic boards for mandatory internship credits.</span></div>
+            </div>
+            <div class="pt-2">
+              <button onclick="openEnrollModal(2, 'individual')" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs tracking-wide shadow-lg shadow-indigo-600/30 transition">
+                Enroll to Claim Your Certificate →
+              </button>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-[#090D16] border-2 border-indigo-500/40 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-emerald-400 flex items-center justify-center font-bold text-white text-xs">NX</div>
+                <div>
+                  <div class="text-xs font-bold text-white">NEXUSINTERN VERIFIED CREDENTIAL</div>
+                  <div class="text-[10px] text-slate-400 font-mono">ID: #NX-2026-8921-VERIFIED</div>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">VALID & AUDITED</span>
+            </div>
+            <div class="space-y-1 text-center py-2">
+              <div class="text-xs text-slate-400 uppercase tracking-widest">Certificate of Excellence</div>
+              <div class="text-lg font-extrabold text-white">Aarav Sharma</div>
+              <div class="text-xs text-indigo-300">Full-Stack Cloud Architecture & Microservices (2 Months)</div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 text-center font-mono text-[10px]">
+              <div><span class="text-slate-500 block">Unit Tests</span><span class="text-emerald-400 font-bold">100% Passed</span></div>
+              <div><span class="text-slate-500 block">Coverage</span><span class="text-indigo-400 font-bold">94.2%</span></div>
+              <div><span class="text-slate-500 block">Trainer Score</span><span class="text-amber-400 font-bold">5.0 / 5.0 ⭐</span></div>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono">
+              <div>Signed by: <strong class="text-slate-200">Dr. Sarah Jenkins (AWS)</strong></div>
+              <div class="text-indigo-400">QR Cryptographic Hash 🔐</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. FINAL CALL TO ACTION BANNER -->
+      <section class="rounded-3xl bg-gradient-to-r from-indigo-900 via-indigo-600 to-cyan-600 p-8 sm:p-12 text-center text-white space-y-6 shadow-2xl">
+        <div class="max-w-2xl mx-auto space-y-4">
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-md uppercase tracking-wider">Limited Cohort Capacity</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Ready to Build Production Systems and Supercharge Your Resume?</h2>
+          <p class="text-xs sm:text-sm text-indigo-100 leading-relaxed">
+            Choose 1, 2, or 6 months. Apply individually or bring your squad. Trainer reviews begin within 24 hours of enrollment.
+          </p>
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button onclick="openEnrollModal(2, 'individual')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white text-indigo-900 hover:bg-slate-100 font-extrabold text-sm tracking-wide shadow-2xl transition transform hover:scale-105">
+              🚀 Apply for Internship Now
+            </button>
+            <button onclick="setRole('individual')" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-black/20 hover:bg-black/30 text-white border border-white/20 font-semibold text-xs transition">
+              View Active Student Dashboard
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- VIEW 1: INDIVIDUAL STUDENT DASHBOARD (WORKSPACE) -->
+    <div id="view-individual" class="hidden space-y-6">
+      
+      <!-- Welcome & Track Overview Banner -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 p-6 shadow-xl">
+        <div class="absolute -right-10 -top-10 w-60 h-60 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Individual Track</span>
+              <span id="active-duration-badge" class="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">2 Months Program</span>
+              <span class="px-2 py-0.5 text-xs rounded-md bg-slate-800 text-slate-300 border border-slate-700">Batch #2026-AUT</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 tracking-tight">Full-Stack Cloud Architecture Internship</h1>
+            <p class="text-sm text-slate-400 mt-1 max-w-2xl">
+              Assigned Mentor: <strong class="text-indigo-300 font-semibold">Dr. Sarah Jenkins (Senior Architect @ AWS)</strong> • Code Reviews every Thursday.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="text-right pr-4 border-r border-slate-800 hidden sm:block">
+              <div class="text-xs text-slate-400">Overall Progress</div>
+              <div class="text-xl font-extrabold text-emerald-400 font-mono">62.5%</div>
+            </div>
+            <a href="#submit-section" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs tracking-wide transition shadow-lg shadow-indigo-600/30 flex items-center space-x-2">
+              <span>Submit Today's Code</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Milestone Progress Steps Indicator -->
+        <div class="mt-6 pt-5 border-t border-slate-800/80">
+          <div class="flex justify-between items-center text-xs font-medium text-slate-400 mb-2">
+            <span>Milestone 5 of 8: Containerization & Microservice Auth</span>
+            <span class="text-indigo-400">Target Deadline: Friday, 11:59 PM</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden p-0.5">
+            <div class="h-full bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-400 rounded-full transition-all duration-500" style="width: 62.5%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Columns: Current Task & Code Submission -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Left 2 Cols: Task Details & Active Code Diff Under Review -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- Current Active Milestone Card -->
+          <div class="rounded-2xl bg-[#0F172A] border border-slate-800 p-6 shadow-md">
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold font-mono">
+                  05
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-white">Secure JWT Middleware & Redis Rate-Limiter</h3>
+                  <p class="text-xs text-slate-400">Module: Backend Microservices & API Gateway Security</p>
+                </div>
+              </div>
+              <span id="milestone-status-badge" class="px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center space-x-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                <span>Under Review by Trainer</span>
+              </span>
+            </div>
+
+            <div class="py-4 space-y-3 text-xs text-slate-300 leading-relaxed">
+              <p>
+                <strong>Deliverable Requirements:</strong> Implement asynchronous JWT token verification middleware with automatic refresh token rotation. Integrate Redis sliding-window algorithm for client rate limiting (100 req/min per IP).
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div class="text-slate-400 text-[10px] uppercase font-mono">Automated CI/CD</div>
+                  <div class="text-emerald-400 font-semibold text-xs mt-0.5 flex items-center space-x-1">
+                    <span>✓ 18/18 Unit Tests Passed</span>
+                  </div>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div class="text-slate-400 text-[10px] uppercase font-mono">SonarQube Coverage</div>
+                  <div class="text-indigo-300 font-semibold text-xs mt-0.5">94.2% Coverage</div>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                  <div class="text-slate-400 text-[10px] uppercase font-mono">Plagiarism / AI Check</div>
+                  <div class="text-emerald-400 font-semibold text-xs mt-0.5">100% Original Code</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Code Diff Snippet Preview -->
+            <div class="mt-4 rounded-xl overflow-hidden border border-slate-800 bg-[#090D16]">
+              <div class="bg-slate-900 px-4 py-2 border-b border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <div class="flex items-center space-x-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block"></span>
+                  <span class="ml-2 text-slate-200">src/middleware/authRateLimit.ts</span>
+                </div>
+                <span class="text-indigo-400">commit 8a4ef1b</span>
+              </div>
+              <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 space-y-1">
+                <div class="text-slate-500">// Redis Sliding Window Rate-Limiter with Token Bucket</div>
+                <div><span class="text-purple-400">export const</span> <span class="text-blue-400">validateTokenAndRate</span> = <span class="text-purple-400">async</span> (req: Request, res: Response, next: NextFunction) => {</div>
+                <div class="pl-4 text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+   const token = req.headers.authorization?.split(' ')[1];</div>
+                <div class="pl-4 text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+   if (!token) return res.status(401).json({ error: 'Auth token missing' });</div>
+                <div class="pl-4 text-slate-400">    const clientIp = req.socket.remoteAddress || 'unknown';</div>
+                <div class="pl-4 text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+   const requestCount = await redisClient.incr(`rl:${clientIp}`);</div>
+                <div class="pl-4 text-slate-400">    if (requestCount > 100) return res.status(429).json({ error: 'Too Many Requests' });</div>
+                <div>};</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Code Submission Box -->
+          <div id="submit-section" class="rounded-2xl bg-[#0F172A] border border-slate-800 p-6 shadow-md">
+            <h3 class="text-base font-bold text-white flex items-center space-x-2">
+              <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <span>Submit Code for Trainer Approval</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">Provide your GitHub Pull Request link or Repository Commit URL for trainer review.</p>
+
+            <form onsubmit="handleStudentSubmission(event)" class="mt-4 space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">GitHub / GitLab PR URL</label>
+                  <input type="url" value="https://github.com/aarav-dev/cloud-internship/pull/12" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-300 mb-1">Git Commit SHA</label>
+                  <input type="text" value="8a4ef1b90c74" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Submission Notes for Trainer</label>
+                <textarea rows="2" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" placeholder="e.g. Added edge-case handling for expired tokens and Docker Compose testing file.">Added unit tests for Redis failover and configured JWT payload encryption.</textarea>
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <div class="flex items-center space-x-2 text-xs text-slate-400">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>Trainer turnaround SLA: ~24 hours</span>
+                </div>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold text-xs tracking-wide shadow-lg shadow-indigo-600/30 transition">
+                  Dispatch to Trainer Queue
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right 1 Col: Trainer Feedback Feed & Duration Milestone Roadmap -->
+        <div class="space-y-6">
+          
+          <!-- Trainer Review Feedback Feed -->
+          <div class="rounded-2xl bg-[#0F172A] border border-slate-800 p-5 shadow-md">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+              <span>Trainer Feedback Log</span>
+              <span class="text-emerald-400 text-[10px] font-mono">Online</span>
+            </h4>
+
+            <div class="mt-4 space-y-3">
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop" class="w-6 h-6 rounded-full object-cover">
+                    <span class="text-xs font-semibold text-white">Dr. Sarah Jenkins</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">2 hrs ago</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  "Great work on the token bucket implementation! In line 14, remember to add a TTL check so stale IPs don't indefinitely consume Redis cache."
+                </p>
+                <div class="flex items-center space-x-2 pt-1">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Approved: Milestone 4</span>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/80 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop" class="w-6 h-6 rounded-full object-cover">
+                    <span class="text-xs font-semibold text-white">Dr. Sarah Jenkins</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500">3 days ago</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  "Database migrations look clean. Dockerized PostgreSQL tested successfully."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Duration Roadmap Breakdown -->
+          <div class="rounded-2xl bg-[#0F172A] border border-slate-800 p-5 shadow-md">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">
+              Curriculum Roadmap (<span id="roadmap-duration-label">2 Months</span>)
+            </h4>
+
+            <div id="roadmap-items" class="space-y-3 text-xs">
+              <!-- Dynamic JS generated roadmap -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: GROUP / TEAM DASHBOARD -->
+    <div id="view-group" class="hidden space-y-6">
+      
+      <div class="rounded-2xl bg-gradient-to-r from-slate-900 via-purple-950/40 to-slate-900 border border-purple-500/30 p-6 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-purple-500/15 text-purple-400 border border-purple-500/30">Group Track</span>
+              <span class="px-2.5 py-0.5 text-xs font-mono font-semibold rounded-md bg-slate-800 text-purple-300 border border-slate-700">Team: DevSquad Alpha</span>
+              <span class="px-2 py-0.5 text-xs rounded-md bg-indigo-500/20 text-indigo-300">Invite Code: #GRP-9402</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 tracking-tight">FinTech Decentralized Settlement Engine</h1>
+            <p class="text-sm text-slate-400 mt-1">4 Team Members • Joint GitHub Org • Trainer: <strong>Marcus Thorne</strong></p>
+          </div>
+          
+          <div class="flex items-center space-x-3">
+            <button onclick="showGroupModal()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs tracking-wide transition shadow-lg shadow-purple-600/30">
+              + Invite Peer to Group
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div class="p-4 rounded-2xl bg-[#0F172A] border border-purple-500/40 relative overflow-hidden">
+          <div class="absolute top-2 right-2 px-2 py-0.5 rounded text-[9px] font-mono bg-purple-500/20 text-purple-300">Team Lead</div>
+          <div class="flex items-center space-x-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" class="w-10 h-10 rounded-full object-cover ring-2 ring-purple-500">
+            <div>
+              <div class="text-xs font-bold text-white">Aarav Sharma</div>
+              <div class="text-[11px] text-slate-400">Full-Stack & Arch</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] flex justify-between text-slate-400 font-mono">
+            <span>Commits: 34</span>
+            <span class="text-emerald-400">12 PRs Approved</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="flex items-center space-x-3">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <div class="text-xs font-bold text-white">Rohan Verma</div>
+              <div class="text-[11px] text-slate-400">Backend & PostgreSQL</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] flex justify-between text-slate-400 font-mono">
+            <span>Commits: 28</span>
+            <span class="text-emerald-400">9 PRs Approved</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="flex items-center space-x-3">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <div class="text-xs font-bold text-white">Priya Patel</div>
+              <div class="text-[11px] text-slate-400">Frontend UI (React/Tailwind)</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] flex justify-between text-slate-400 font-mono">
+            <span>Commits: 41</span>
+            <span class="text-emerald-400">14 PRs Approved</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="flex items-center space-x-3">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <div class="text-xs font-bold text-white">Aditya Sen</div>
+              <div class="text-[11px] text-slate-400">DevOps & Kubernetes</div>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-800 text-[11px] flex justify-between text-slate-400 font-mono">
+            <span>Commits: 19</span>
+            <span class="text-emerald-400">7 PRs Approved</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 rounded-2xl bg-[#0F172A] border border-slate-800 p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+              <span>Sprint Task Matrix</span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-purple-500/10 text-purple-400">Group Milestone #4</span>
+            </h3>
+            <span class="text-xs text-slate-400">Trainer Sync: Today 4:00 PM</span>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">Distributed Transaction Locking with Redis Redlock</div>
+                <div class="text-[11px] text-slate-400">Assigned to: Rohan Verma • PR #44</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Trainer Approved ✓</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">Interactive Settlement Dashboard UI Components</div>
+                <div class="text-[11px] text-slate-400">Assigned to: Priya Patel • PR #45</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Trainer Reviewing ⏳</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">Kubernetes Helm Chart Deployment on AWS EKS</div>
+                <div class="text-[11px] text-slate-400">Assigned to: Aditya Sen • Branch: feat/helm-setup</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700">In Progress</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-[#0F172A] border border-slate-800 p-6 space-y-4">
+          <h3 class="text-sm font-bold text-white">Group Milestone Sign-off</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            In Group Track, all 4 members' sub-tasks must pass trainer code review to trigger collective milestone completion and certificate accreditation.
+          </p>
+
+          <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">Group Health Score</span>
+              <span class="text-emerald-400 font-bold font-mono">98 / 100</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">Pull Requests Merged</span>
+              <span class="text-white font-mono">42 PRs</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">Trainer Approval Velocity</span>
+              <span class="text-purple-400 font-mono">1.2 days avg</span>
+            </div>
+          </div>
+
+          <button onclick="notifyTrainerTeamReview()" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs tracking-wide transition shadow-lg shadow-purple-600/30">
+            Request Trainer Group Inspection
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: TRAINER CODE REVIEW STUDIO -->
+    <div id="view-trainer" class="hidden space-y-6">
+      
+      <div class="rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 border border-emerald-500/30 p-6 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Trainer Studio</span>
+              <span class="px-2.5 py-0.5 text-xs font-mono rounded-md bg-slate-800 text-slate-300">Mentor: Dr. Sarah Jenkins</span>
+              <span class="px-2 py-0.5 text-xs rounded-md bg-emerald-500/20 text-emerald-300">Queue: 4 Pending Code Reviews</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 tracking-tight">Code Evaluation & Approval Console</h1>
+            <p class="text-sm text-slate-400 mt-1">Review student code diffs, run syntax audits, add line-by-line feedback, and approve milestones.</p>
+          </div>
+
+          <div class="flex items-center space-x-4 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800 font-mono text-xs">
+            <div>
+              <span class="text-slate-400 block text-[10px]">Today's Approvals</span>
+              <span class="text-emerald-400 font-bold text-sm">12 Approved</span>
+            </div>
+            <div class="h-6 w-px bg-slate-700"></div>
+            <div>
+              <span class="text-slate-400 block text-[10px]">Revisions Sent</span>
+              <span class="text-amber-400 font-bold text-sm">3 Revisions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-4 rounded-2xl bg-[#0F172A] border border-slate-800 p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Submissions Queue</h3>
+            <span class="px-2 py-0.5 text-[10px] rounded bg-indigo-500/10 text-indigo-400 font-mono">Sorted by Urgency</span>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-900 border-2 border-indigo-500/70 cursor-pointer shadow-md">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Individual (2M)</span>
+              <span class="text-[10px] text-amber-400 font-mono">Pending Review</span>
+            </div>
+            <h4 class="text-xs font-bold text-white mt-2">Aarav Sharma</h4>
+            <p class="text-[11px] text-slate-400">Milestone 5: Secure JWT Middleware & Redis</p>
+            <div class="mt-2 text-[10px] text-slate-500 flex justify-between font-mono">
+              <span>PR #12</span>
+              <span>Submitted 2h ago</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 cursor-pointer transition">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/15 text-purple-400 border border-purple-500/30">Group (6M)</span>
+              <span class="text-[10px] text-amber-400 font-mono">Pending Review</span>
+            </div>
+            <h4 class="text-xs font-bold text-white mt-2">DevSquad Alpha (Priya Patel)</h4>
+            <p class="text-[11px] text-slate-400">Milestone 4: Interactive Settlement UI</p>
+            <div class="mt-2 text-[10px] text-slate-500 flex justify-between font-mono">
+              <span>PR #45</span>
+              <span>Submitted 4h ago</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 cursor-pointer transition">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">Individual (1M)</span>
+              <span class="text-[10px] text-slate-400 font-mono">Sprint Capstone</span>
+            </div>
+            <h4 class="text-xs font-bold text-white mt-2">Kavita Iyer</h4>
+            <p class="text-[11px] text-slate-400">Milestone 4: Final AWS Deployment & Lambdas</p>
+            <div class="mt-2 text-[10px] text-slate-500 flex justify-between font-mono">
+              <span>PR #8</span>
+              <span>Submitted 5h ago</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-8 rounded-2xl bg-[#0F172A] border border-slate-800 p-6 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-2">
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-sm font-bold text-white">Inspecting Code: Aarav Sharma</h3>
+                <span class="text-xs text-indigo-400 font-mono">(Branch: feat/jwt-auth)</span>
+              </div>
+              <p class="text-xs text-slate-400">Repository: github.com/aarav-dev/cloud-internship • Commit: 8a4ef1b</p>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Tests: 18 Passed</span>
+              <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Coverage: 94%</span>
+            </div>
+          </div>
+
+          <div class="rounded-xl overflow-hidden border border-slate-800 bg-[#090D16]">
+            <div class="bg-slate-900/90 px-4 py-2 border-b border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+              <span>Comparing: main ... feat/jwt-auth (+48 / -12 lines)</span>
+              <span class="text-emerald-400">Unified Diff</span>
+            </div>
+            
+            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 space-y-1 select-text">
+              <div class="text-slate-500">@@ -12,8 +12,14 @@ import { verifyToken } from '../utils/crypto';</div>
+              <div class="text-slate-400"> const rateLimitWindowMs = 60 * 1000; // 1 minute</div>
+              <div class="text-red-400 bg-red-500/10 -mx-4 px-4 border-l-2 border-red-500">- const memoryStore = new Map(); // Deprecated in-memory store</div>
+              <div class="text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+ const redisClient = createClient({ url: process.env.REDIS_URL });</div>
+              <div class="text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+ await redisClient.connect();</div>
+              <div class="text-slate-400"> export const authMiddleware = async (req, res, next) => {</div>
+              <div class="text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+   const token = req.headers.authorization?.replace('Bearer ', '');</div>
+              <div class="text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+   const decoded = await verifyToken(token);</div>
+              <div class="text-emerald-400 bg-emerald-500/10 -mx-4 px-4 border-l-2 border-emerald-500">+   req.user = decoded;</div>
+              <div class="text-slate-400">    next();</div>
+              <div class="text-slate-400"> };</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Code Quality Score</label>
+              <select class="w-full bg-slate-800 border border-slate-700 text-xs text-white rounded-lg p-2 focus:outline-none">
+                <option selected>⭐⭐⭐⭐⭐ (5/5) Exceptional</option>
+                <option>⭐⭐⭐⭐ (4/5) Clean & Structured</option>
+                <option>⭐⭐⭐ (3/5) Adequate / Minor Fixes</option>
+              </select>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Architecture & Security</label>
+              <select class="w-full bg-slate-800 border border-slate-700 text-xs text-white rounded-lg p-2 focus:outline-none">
+                <option selected>Passes OWASP Guidelines</option>
+                <option>Needs Sanitization Check</option>
+              </select>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+              <label class="block text-[11px] font-medium text-slate-400 mb-1">Test Coverage</label>
+              <div class="text-emerald-400 font-mono text-xs font-bold pt-2">94% Verified</div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Trainer Feedback & Inline Remarks</label>
+            <textarea id="trainer-feedback-input" rows="2" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">Exceptional code structure. Redis cluster reconnect logic is robust. Milestone approved!</textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2 border-t border-slate-800">
+            <button onclick="trainerRequestChanges()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-amber-500/40 text-amber-400 hover:bg-amber-500/10 font-semibold text-xs tracking-wide transition flex items-center justify-center space-x-1.5">
+              <span>⚠️ Request Revisions</span>
+            </button>
+            <button onclick="trainerApproveCode()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold text-xs tracking-wide shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Approve & Sign-Off Milestone</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 4: ADMIN COMMAND CENTER -->
+    <div id="view-admin" class="hidden space-y-6">
+      
+      <div class="rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 p-6 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">Platform Administration</span>
+              <span class="px-2 py-0.5 text-xs rounded-md bg-emerald-500/20 text-emerald-300">All Microservices Healthy</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 tracking-tight">Internship Operations & Governance</h1>
+            <p class="text-sm text-slate-400 mt-1">Manage 1M, 2M, 6M duration cohorts, trainer assignments, and automated certification issuance.</p>
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <button onclick="triggerCertAudit()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs border border-slate-700 transition">
+              Audited Verifications
+            </button>
+            <button onclick="downloadReport()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs tracking-wide transition shadow-lg shadow-indigo-600/30">
+              Export Analytics
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="p-5 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="text-xs font-medium text-slate-400">Total Enrolled Interns</div>
+          <div class="text-2xl font-extrabold text-white mt-1 font-mono">1,428</div>
+          <div class="text-[11px] text-cyan-400 mt-1">840 Individual • 588 in Groups</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="text-xs font-medium text-slate-400">Active Code Submissions</div>
+          <div class="text-2xl font-extrabold text-indigo-400 mt-1 font-mono">312</div>
+          <div class="text-[11px] text-slate-400 mt-1">Avg Trainer Review Time: 18 hrs</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="text-xs font-medium text-slate-400">Verified Mentors / Trainers</div>
+          <div class="text-2xl font-extrabold text-emerald-400 mt-1 font-mono">48 Active</div>
+          <div class="text-[11px] text-emerald-400 mt-1">100% capacity balanced</div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-[#0F172A] border border-slate-800">
+          <div class="text-xs font-medium text-slate-400">Certificates Issued</div>
+          <div class="text-2xl font-extrabold text-purple-400 mt-1 font-mono">892</div>
+          <div class="text-[11px] text-slate-400 mt-1">Tamper-proof blockchain hash</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="rounded-2xl bg-[#0F172A] border border-slate-800 p-6 space-y-4">
+          <h3 class="text-sm font-bold text-white">Enrollment by Duration Track</h3>
+          
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-cyan-400 font-medium">1 Month (Sprint)</span>
+                <span class="text-slate-300 font-mono">485 Interns (34%)</span>
+              </div>
+              <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-cyan-400 rounded-full" style="width: 34%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-indigo-400 font-medium">2 Months (Core Standard)</span>
+                <span class="text-slate-300 font-mono">642 Interns (45%)</span>
+              </div>
+              <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-indigo-500 rounded-full" style="width: 45%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-purple-400 font-medium">6 Months (Industrial Capstone)</span>
+                <span class="text-slate-300 font-mono">301 Interns (21%)</span>
+              </div>
+              <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-purple-500 rounded-full" style="width: 21%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-400">
+            Cohort retention rate currently stands at <strong>94.8%</strong> across all duration tiers.
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 rounded-2xl bg-[#0F172A] border border-slate-800 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white">Trainer Allocation & Code Turnaround SLA</h3>
+            <span class="text-xs text-indigo-400 font-mono">Auto-Load Balancer Active</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="text-slate-400 uppercase text-[10px] border-b border-slate-800 bg-slate-900/50">
+                <tr>
+                  <th class="py-2.5 px-3">Trainer Name</th>
+                  <th class="py-2.5 px-3">Specialization</th>
+                  <th class="py-2.5 px-3">Active Reviews</th>
+                  <th class="py-2.5 px-3">Avg Approval Speed</th>
+                  <th class="py-2.5 px-3 text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-300">
+                <tr>
+                  <td class="py-3 px-3 font-semibold text-white flex items-center space-x-2">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=60&h=60&fit=crop" class="w-6 h-6 rounded-full object-cover">
+                    <span>Dr. Sarah Jenkins</span>
+                  </td>
+                  <td class="py-3 px-3 text-slate-400">Cloud & Security</td>
+                  <td class="py-3 px-3 font-mono">4 reviews</td>
+                  <td class="py-3 px-3 text-emerald-400 font-mono">14 hrs</td>
+                  <td class="py-3 px-3 text-right"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400">Optimal</span></td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-3 font-semibold text-white flex items-center space-x-2">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop" class="w-6 h-6 rounded-full object-cover">
+                    <span>Marcus Thorne</span>
+                  </td>
+                  <td class="py-3 px-3 text-slate-400">FinTech & Distributed Systems</td>
+                  <td class="py-3 px-3 font-mono">6 reviews</td>
+                  <td class="py-3 px-3 text-emerald-400 font-mono">19 hrs</td>
+                  <td class="py-3 px-3 text-right"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400">Optimal</span></td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-3 font-semibold text-white flex items-center space-x-2">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop" class="w-6 h-6 rounded-full object-cover">
+                    <span>Elena Rostova</span>
+                  </td>
+                  <td class="py-3 px-3 text-slate-400">AI / ML Pipelines</td>
+                  <td class="py-3 px-3 font-mono">2 reviews</td>
+                  <td class="py-3 px-3 text-emerald-400 font-mono">8 hrs</td>
+                  <td class="py-3 px-3 text-right"><span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/10 text-indigo-400">Available</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- COLOR PALETTE & TOKEN GUIDE MODAL -->
+  <div id="palette-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0F172A] border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-white flex items-center space-x-2">
+            <span>🎨 NexusIntern Theme Tokens & Swatches</span>
+          </h3>
+          <p class="text-xs text-slate-400">Optimized for high-contrast code readability, dark mode luxury, and multi-role clarity.</p>
+        </div>
+        <button onclick="togglePaletteModal()" class="text-slate-400 hover:text-white text-lg font-bold p-1">&times;</button>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="w-full h-10 rounded-lg bg-[#4F46E5] mb-2 shadow-inner"></div>
+          <div class="text-[11px] font-bold text-white">Primary Indigo</div>
+          <div class="text-[10px] text-slate-400 font-mono">#4F46E5</div>
+          <div class="text-[9px] text-indigo-300 mt-1">Core Actions / Nav</div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="w-full h-10 rounded-lg bg-[#10B981] mb-2 shadow-inner"></div>
+          <div class="text-[11px] font-bold text-white">Trainer Emerald</div>
+          <div class="text-[10px] text-slate-400 font-mono">#10B981</div>
+          <div class="text-[9px] text-emerald-300 mt-1">Approved Code / Check</div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="w-full h-10 rounded-lg bg-[#8B5CF6] mb-2 shadow-inner"></div>
+          <div class="text-[11px] font-bold text-white">Group Violet</div>
+          <div class="text-[10px] text-slate-400 font-mono">#8B5CF6</div>
+          <div class="text-[9px] text-purple-300 mt-1">Team Workspaces</div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="w-full h-10 rounded-lg bg-[#06B6D4] mb-2 shadow-inner"></div>
+          <div class="text-[11px] font-bold text-white">Express Cyan</div>
+          <div class="text-[10px] text-slate-400 font-mono">#06B6D4</div>
+          <div class="text-[9px] text-cyan-300 mt-1">1M Sprint & Individual</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+        <h4 class="text-xs font-semibold text-slate-200">Duration Color System</h4>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <div class="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300">
+            <strong>1 Month</strong>: Sprint Track
+          </div>
+          <div class="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300">
+            <strong>2 Months</strong>: Core Standard
+          </div>
+          <div class="p-2 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300">
+            <strong>6 Months</strong>: Capstone Enterprise
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="togglePaletteModal()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition">
+          Close Guide
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION & PORTAL LOGIN MODAL -->
+  <div id="login-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#0F172A] border border-slate-700/80 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative overflow-hidden space-y-5">
+      <div class="absolute -top-12 -right-12 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Portal Access Authentication</h3>
+            <p class="text-xs text-slate-400">Select account modality to access dashboard</p>
+          </div>
+        </div>
+        <button onclick="toggleLoginModal()" class="text-slate-400 hover:text-white text-lg font-bold p-1 rounded-lg">&times;</button>
+      </div>
+
+      <!-- 4 Modal Tabs -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 bg-slate-900 rounded-xl border border-slate-800">
+        <button onclick="setLoginTab('individual')" id="login-tab-individual" class="py-2 px-1 text-center rounded-lg text-[11px] font-semibold transition bg-cyan-600 text-white shadow-sm">
+          👨‍💻 Individual
+        </button>
+        <button onclick="setLoginTab('group')" id="login-tab-group" class="py-2 px-1 text-center rounded-lg text-[11px] font-semibold transition text-slate-400 hover:text-white">
+          👥 Group Track
+        </button>
+        <button onclick="setLoginTab('trainer')" id="login-tab-trainer" class="py-2 px-1 text-center rounded-lg text-[11px] font-semibold transition text-slate-400 hover:text-white">
+          🧑‍🏫 Trainer
+        </button>
+        <button onclick="setLoginTab('admin')" id="login-tab-admin" class="py-2 px-1 text-center rounded-lg text-[11px] font-semibold transition text-slate-400 hover:text-white">
+          🛡️ Admin
+        </button>
+      </div>
+
+      <!-- TAB 1: INDIVIDUAL STUDENT -->
+      <form id="form-login-individual" onsubmit="handleAuthLogin(event, 'individual')" class="space-y-4">
+        <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs text-cyan-300">
+          <strong>Individual Intern Track:</strong> Personal git repo, weekly sprints, dedicated 1-on-1 code reviews with trainer.
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Student University / Tech Email</label>
+          <input type="email" value="aarav.sharma@nexusintern.io" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Select Enrolled Duration</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="selectLoginDuration(1)" id="login-dur-1" class="p-2 rounded-xl border text-center text-xs font-semibold border-slate-800 bg-slate-900 text-slate-400">
+              1 Month<span class="block text-[10px] font-normal opacity-75">Sprint</span>
+            </button>
+            <button type="button" onclick="selectLoginDuration(2)" id="login-dur-2" class="p-2 rounded-xl border text-center text-xs font-semibold border-indigo-500 bg-indigo-500/20 text-indigo-300">
+              2 Months<span class="block text-[10px] font-normal opacity-75">Core</span>
+            </button>
+            <button type="button" onclick="selectLoginDuration(6)" id="login-dur-6" class="p-2 rounded-xl border text-center text-xs font-semibold border-slate-800 bg-slate-900 text-slate-400">
+              6 Months<span class="block text-[10px] font-normal opacity-75">Capstone</span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
+          <input type="password" value="••••••••••••" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+        </div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-cyan-600/30 transition">
+          Sign In as Individual Intern
+        </button>
+      </form>
+
+      <!-- TAB 2: GROUP TRACK -->
+      <form id="form-login-group" onsubmit="handleAuthLogin(event, 'group')" class="hidden space-y-4">
+        <div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-xs text-purple-300">
+          <strong>Group Engineering Track:</strong> Collaborative workspace, team branch merging, and collective trainer sign-off.
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Team Squad Invite / Passcode</label>
+          <input type="text" value="GRP-9402" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-purple-300 font-mono font-bold focus:outline-none focus:border-purple-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Team Member Email</label>
+          <input type="email" value="lead@devsquad-alpha.internal" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-purple-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Role in Squad</label>
+          <select class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-purple-500">
+            <option>Squad Lead / Architecture</option>
+            <option>Backend & Database Engineer</option>
+            <option>Frontend & UI/UX Developer</option>
+            <option>DevOps & CI/CD Pipeline</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-purple-600/30 transition">
+          Sign In to Team Workspace
+        </button>
+      </form>
+
+      <!-- TAB 3: TRAINER -->
+      <form id="form-login-trainer" onsubmit="handleAuthLogin(event, 'trainer')" class="hidden space-y-4">
+        <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300">
+          <strong>Trainer & Mentor Console:</strong> Review student pull requests, inspect code diffs, verify automated test results, and grant milestone approvals.
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Trainer Institutional Email</label>
+          <input type="email" value="sarah.jenkins@nexusintern.io" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Reviewer Security Passcode</label>
+          <input type="password" value="TRN-KEY-2026-X8" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-emerald-500 font-mono">
+        </div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-emerald-600/30 transition">
+          Sign In to Trainer Review Studio
+        </button>
+      </form>
+
+      <!-- TAB 4: ADMIN -->
+      <form id="form-login-admin" onsubmit="handleAuthLogin(event, 'admin')" class="hidden space-y-4">
+        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">
+          <strong>Platform Super Admin:</strong> Manage 1M, 2M, 6M duration cohorts, trainer review turnaround SLA, and blockchain certificates.
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Root Administrator Email</label>
+          <input type="email" value="security-admin@nexusintern.io" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Hardware / 2FA Security Token</label>
+          <input type="password" value="ADM-9941-SUPER" required class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-500 font-mono">
+        </div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs tracking-wide shadow-lg shadow-amber-600/30 transition">
+          Sign In to Super Admin Hub
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- INSTANT STUDENT ENROLLMENT MODAL -->
+  <div id="enroll-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-[#0F172A] border border-indigo-500/40 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+      
+      <div class="absolute -top-16 -right-16 w-64 h-64 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-slate-800 pb-4 mb-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-emerald-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 class="text-lg font-extrabold text-white">Enroll in Online Internship</h3>
+              <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                BATCH #2026-AUT
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Join 1,420+ interns gaining real GitHub PR code reviews from senior industry architects.
+            </p>
+          </div>
+        </div>
+        <button onclick="toggleEnrollModal()" class="text-slate-400 hover:text-white p-1 rounded-lg text-xl font-bold transition">&times;</button>
+      </div>
+
+      <form onsubmit="handleEnrollmentSubmit(event)" class="space-y-5">
+        
+        <!-- STEP 1: MODALITY -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+            Step 1: Choose Your Learning Modality
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div onclick="selectEnrollModality('individual')" id="enroll-modal-mod-indiv" class="p-4 rounded-2xl border cursor-pointer transition border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/10">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span class="text-lg">👨‍💻</span>
+                  <span class="text-xs font-bold text-white">Solo Intern (Individual)</span>
+                </div>
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Private Git repo, independent pace, 1-on-1 code reviews with mentor.
+              </p>
+            </div>
+
+            <div onclick="selectEnrollModality('group')" id="enroll-modal-mod-group" class="p-4 rounded-2xl border cursor-pointer transition border-slate-800 bg-slate-900/60 hover:border-slate-700 relative">
+              <div class="absolute -top-2 right-3 px-2 py-0.5 rounded-full text-[9px] font-bold bg-purple-500 text-white shadow-sm">
+                25% SQUAD PERK
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span class="text-lg">👥</span>
+                  <span class="text-xs font-bold text-white">Squad / Team Track</span>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                Enroll with college peers (2-4 members). Learn Agile, branch merges & team PRs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: DURATION -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+            Step 2: Select Duration Track
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div onclick="selectEnrollDuration(1)" id="enroll-modal-dur-1" class="p-3.5 rounded-2xl border cursor-pointer transition border-slate-800 bg-slate-900/60 hover:border-slate-700">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-cyan-400">1 Month</span>
+                <span class="text-[10px] font-mono text-slate-400">4 Weeks</span>
+              </div>
+              <div class="text-xs font-semibold text-white mt-1">Fast-Track Sprint</div>
+              <p class="text-[10px] text-slate-400 mt-1">Git, Clean Code, REST APIs, and Serverless.</p>
+            </div>
+
+            <div onclick="selectEnrollDuration(2)" id="enroll-modal-dur-2" class="p-3.5 rounded-2xl border cursor-pointer transition relative border-indigo-500 bg-indigo-500/15 shadow-sm ring-1 ring-indigo-500/60">
+              <span class="absolute -top-2 right-2 px-1.5 py-0.2 rounded text-[8px] font-bold bg-indigo-500 text-white uppercase">Popular ⭐</span>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-indigo-400">2 Months</span>
+                <span class="text-[10px] font-mono text-slate-400">8 Weeks</span>
+              </div>
+              <div class="text-xs font-semibold text-white mt-1">Core Architecture</div>
+              <p class="text-[10px] text-slate-400 mt-1">Microservices, Redis, CI/CD, and LOR.</p>
+            </div>
+
+            <div onclick="selectEnrollDuration(6)" id="enroll-modal-dur-6" class="p-3.5 rounded-2xl border cursor-pointer transition border-slate-800 bg-slate-900/60 hover:border-slate-700">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-purple-400">6 Months</span>
+                <span class="text-[10px] font-mono text-slate-400">24 Weeks</span>
+              </div>
+              <div class="text-xs font-semibold text-white mt-1">Industrial Capstone</div>
+              <p class="text-[10px] text-slate-400 mt-1">Kubernetes, Service Mesh, and Placements.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: SPECIALIZATION -->
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+            Step 3: Engineering Track Specialization
+          </label>
+          <select id="enroll-spec" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500">
+            <option>Full-Stack Cloud Architecture & Microservices (React, Node, Go, AWS)</option>
+            <option>AI / Machine Learning & Agentic Systems (Python, PyTorch, LangChain)</option>
+            <option>FinTech Distributed Backend & High-Throughput DB (PostgreSQL, Redis, Kafka)</option>
+            <option>DevOps, Kubernetes & Cloud Security Architecture (EKS, Docker, Helm)</option>
+          </select>
+        </div>
+
+        <!-- STEP 4: STUDENT DETAILS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+            <input type="text" id="enroll-name" value="Aarav Sharma" required class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Student / University Email</label>
+            <input type="email" id="enroll-email" value="aarav.sharma@nexusintern.io" required class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">College / University Name</label>
+          <input type="text" id="enroll-college" value="IIT Bombay / Computer Science" required class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500">
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs space-y-1.5 text-slate-300">
+          <div class="flex items-center space-x-2 text-emerald-400 font-medium"><span>✓ Guaranteed Senior Mentor Code Reviews (&lt;24h SLA)</span></div>
+          <div class="flex items-center space-x-2 text-emerald-400 font-medium"><span>✓ Cryptographically Verifiable Blockchain Certificate & Digital Badge</span></div>
+          <div class="flex items-center space-x-2 text-emerald-400 font-medium"><span>✓ Official Trainer Letter of Recommendation (LOR) for Top Performers</span></div>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 text-white font-extrabold text-sm tracking-wide shadow-xl shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+            Confirm Enrollment & Launch Internship Workspace 🚀
+          </button>
+          <p class="text-[11px] text-center text-slate-500 mt-2">Instant workspace activation. No preliminary exam required.</p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentView = 'explore';
+    let currentRole = 'individual';
+    let currentDuration = 2;
+    let isDarkMode = true;
+    let currentPreviewModality = 'individual';
+    let enrollDuration = 2;
+    let enrollModality = 'individual';
+
+    function setView(view) {
+      currentView = view;
+      const exploreView = document.getElementById('view-explore');
+      const durationSubbar = document.getElementById('duration-subbar');
+      const navBtnExplore = document.getElementById('nav-btn-explore');
+      const mBtnExplore = document.getElementById('m-btn-explore');
+
+      if (view === 'explore') {
+        exploreView.classList.remove('hidden');
+        document.getElementById('view-individual').classList.add('hidden');
+        document.getElementById('view-group').classList.add('hidden');
+        document.getElementById('view-trainer').classList.add('hidden');
+        document.getElementById('view-admin').classList.add('hidden');
+        durationSubbar.classList.add('hidden');
+
+        if (navBtnExplore) {
+          navBtnExplore.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400/50';
+        }
+        if (mBtnExplore) {
+          mBtnExplore.className = 'px-3 py-1 rounded-md bg-indigo-600 text-white font-bold whitespace-nowrap';
+        }
+
+        const roles = ['individual', 'group', 'trainer', 'admin'];
+        roles.forEach(r => {
+          const btn = document.getElementById(`role-btn-${r}`);
+          if (btn) btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5';
+          const mBtn = document.getElementById(`m-btn-${r}`);
+          if (mBtn) mBtn.className = 'px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap';
+        });
+
+      } else if (view === 'workspace') {
+        exploreView.classList.add('hidden');
+        durationSubbar.classList.remove('hidden');
+        document.getElementById(`view-${currentRole}`).classList.remove('hidden');
+
+        if (navBtnExplore) {
+          navBtnExplore.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60';
+        }
+        if (mBtnExplore) {
+          mBtnExplore.className = 'px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap';
+        }
+
+        const roles = ['individual', 'group', 'trainer', 'admin'];
+        roles.forEach(r => {
+          const btn = document.getElementById(`role-btn-${r}`);
+          const mBtn = document.getElementById(`m-btn-${r}`);
+          if (r === currentRole) {
+            let activeBg = 'bg-cyan-600';
+            if (r === 'group') activeBg = 'bg-purple-600';
+            if (r === 'trainer') activeBg = 'bg-emerald-600';
+            if (r === 'admin') activeBg = 'bg-amber-600';
+            if (btn) btn.className = `px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 ${activeBg} text-white shadow-sm`;
+            if (mBtn) mBtn.className = `px-3 py-1 rounded-md ${activeBg} text-white font-bold whitespace-nowrap`;
+          } else {
+            if (btn) btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5';
+            if (mBtn) mBtn.className = 'px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap';
+          }
+        });
+      }
+    }
+
+    function togglePreviewModality(mod) {
+      currentPreviewModality = mod;
+      const indivBtn = document.getElementById('modality-btn-indiv');
+      const groupBtn = document.getElementById('modality-btn-group');
+      const indivContent = document.getElementById('modality-content-indiv');
+      const groupContent = document.getElementById('modality-content-group');
+
+      if (mod === 'individual') {
+        indivBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition bg-cyan-600 text-white shadow-md';
+        groupBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white';
+        indivContent.classList.remove('hidden');
+        groupContent.classList.add('hidden');
+      } else {
+        groupBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition bg-purple-600 text-white shadow-md';
+        indivBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white';
+        groupContent.classList.remove('hidden');
+        indivContent.classList.add('hidden');
+      }
+    }
+
+    function openEnrollModal(duration, modality) {
+      if (duration) selectEnrollDuration(duration);
+      if (modality) selectEnrollModality(modality);
+      document.getElementById('enroll-modal').classList.remove('hidden');
+    }
+
+    function toggleEnrollModal() {
+      document.getElementById('enroll-modal').classList.toggle('hidden');
+    }
+
+    function selectEnrollModality(mod) {
+      enrollModality = mod;
+      const indivCard = document.getElementById('enroll-modal-mod-indiv');
+      const groupCard = document.getElementById('enroll-modal-mod-group');
+      if (mod === 'individual') {
+        indivCard.className = 'p-4 rounded-2xl border cursor-pointer transition border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/10';
+        groupCard.className = 'p-4 rounded-2xl border cursor-pointer transition border-slate-800 bg-slate-900/60 hover:border-slate-700 relative';
+      } else {
+        groupCard.className = 'p-4 rounded-2xl border cursor-pointer transition border-purple-500 bg-purple-500/10 shadow-lg shadow-purple-500/10 relative';
+        indivCard.className = 'p-4 rounded-2xl border cursor-pointer transition border-slate-800 bg-slate-900/60 hover:border-slate-700';
+      }
+    }
+
+    function selectEnrollDuration(dur) {
+      enrollDuration = dur;
+      [1, 2, 6].forEach(d => {
+        const card = document.getElementById(`enroll-modal-dur-${d}`);
+        if (d === dur) {
+          let borderCol = d === 1 ? 'border-cyan-500 bg-cyan-500/15' : (d === 2 ? 'border-indigo-500 bg-indigo-500/15 ring-1 ring-indigo-500/60' : 'border-purple-500 bg-purple-500/15');
+          card.className = `p-3.5 rounded-2xl border cursor-pointer transition relative shadow-sm ${borderCol}`;
+        } else {
+          card.className = 'p-3.5 rounded-2xl border cursor-pointer transition border-slate-800 bg-slate-900/60 hover:border-slate-700';
+        }
+      });
+    }
+
+    function handleEnrollmentSubmit(e) {
+      e.preventDefault();
+      toggleEnrollModal();
+      const nameInput = document.getElementById('enroll-name');
+      const studentName = nameInput ? nameInput.value : 'Aarav';
+
+      setDuration(enrollDuration);
+      setRole(enrollModality);
+      setView('workspace');
+
+      showToast(
+        `🎉 Welcome Aboard, ${studentName.split(' ')[0]}!`,
+        `Successfully enrolled in the ${enrollDuration} Month ${enrollModality === 'group' ? 'Squad' : 'Solo'} track. Your workspace is ready!`
+      );
+    }
+
+    const roadmapData = {
+      1: [
+        { week: 'Week 1', title: 'Git & Full-Stack Environment Setup', status: 'done' },
+        { week: 'Week 2', title: 'RESTful API & Database Architecture', status: 'done' },
+        { week: 'Week 3', title: 'Security, JWT & Redis Middleware', status: 'active' },
+        { week: 'Week 4', title: 'AWS Cloud Deployment & Final Defense', status: 'upcoming' },
+      ],
+      2: [
+        { week: 'Weeks 1-2', title: 'System Architecture & Database Schema Design', status: 'done' },
+        { week: 'Weeks 3-4', title: 'REST API & Core Domain Services', status: 'done' },
+        { week: 'Weeks 5-6', title: 'JWT Middleware, Redis & Security Hardening', status: 'active' },
+        { week: 'Weeks 7-8', title: 'CI/CD Pipeline, Automated Tests & Sign-off', status: 'upcoming' },
+      ],
+      6: [
+        { month: 'Month 1', title: 'Enterprise Core Foundations & Clean Architecture', status: 'done' },
+        { month: 'Month 2', title: 'Microservices Decomposition & Event Bus', status: 'done' },
+        { month: 'Month 3', title: 'Kubernetes Orchestration & Service Mesh', status: 'active' },
+        { month: 'Month 4', title: 'High-Concurrency Stress Testing & Caching', status: 'upcoming' },
+        { month: 'Month 5', title: 'FinTech Compliance & Production Telemetry', status: 'upcoming' },
+        { month: 'Month 6', title: 'Capstone Defense & Industry Placement', status: 'upcoming' },
+      ]
+    };
+
+    function renderRoadmap() {
+      const container = document.getElementById('roadmap-items');
+      const items = roadmapData[currentDuration];
+      const label = currentDuration === 1 ? '1 Month (Sprint)' : (currentDuration === 2 ? '2 Months (Core)' : '6 Months (Capstone)');
+      document.getElementById('roadmap-duration-label').textContent = label;
+      
+      container.innerHTML = items.map((item, idx) => {
+        let badgeColor = 'bg-slate-800 text-slate-400 border-slate-700';
+        let statusText = 'Upcoming';
+        if (item.status === 'done') {
+          badgeColor = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+          statusText = '✓ Approved';
+        } else if (item.status === 'active') {
+          badgeColor = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+          statusText = 'In Review';
+        }
+        return `
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900 border border-slate-800/80">
+            <div>
+              <span class="text-[10px] text-slate-400 font-mono block">${item.week || item.month}</span>
+              <span class="text-xs font-medium text-white">${item.title}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono border ${badgeColor}">${statusText}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setRole(role) {
+      currentRole = role;
+      if (currentView !== 'workspace') {
+        setView('workspace');
+      }
+
+      document.getElementById('view-individual').classList.add('hidden');
+      document.getElementById('view-group').classList.add('hidden');
+      document.getElementById('view-trainer').classList.add('hidden');
+      document.getElementById('view-admin').classList.add('hidden');
+      document.getElementById(`view-${role}`).classList.remove('hidden');
+
+      const roles = ['individual', 'group', 'trainer', 'admin'];
+      roles.forEach(r => {
+        const btn = document.getElementById(`role-btn-${r}`);
+        const mBtn = document.getElementById(`m-btn-${r}`);
+        if (r === role) {
+          let activeBg = 'bg-cyan-600';
+          if (r === 'group') activeBg = 'bg-purple-600';
+          if (r === 'trainer') activeBg = 'bg-emerald-600';
+          if (r === 'admin') activeBg = 'bg-amber-600';
+          if (btn) btn.className = `px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 ${activeBg} text-white shadow-sm`;
+          if (mBtn) mBtn.className = `px-3 py-1 rounded-md ${activeBg} text-white font-bold whitespace-nowrap`;
+        } else {
+          if (btn) btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center space-x-1.5';
+          if (mBtn) mBtn.className = 'px-3 py-1 rounded-md bg-slate-800 text-slate-300 whitespace-nowrap';
+        }
+      });
+
+      const avatar = document.getElementById('user-avatar');
+      const name = document.getElementById('user-name');
+      const badge = document.getElementById('user-role-badge');
+
+      if (role === 'individual') {
+        avatar.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces';
+        name.textContent = 'Aarav Sharma';
+        badge.textContent = 'Individual Intern';
+        badge.className = 'text-[10px] text-indigo-400 font-mono';
+      } else if (role === 'group') {
+        avatar.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces';
+        name.textContent = 'DevSquad Alpha (Lead)';
+        badge.textContent = 'Group Intern';
+        badge.className = 'text-[10px] text-purple-400 font-mono';
+      } else if (role === 'trainer') {
+        avatar.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop';
+        name.textContent = 'Dr. Sarah Jenkins';
+        badge.textContent = 'Lead Trainer & Reviewer';
+        badge.className = 'text-[10px] text-emerald-400 font-mono';
+      } else if (role === 'admin') {
+        avatar.src = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop';
+        name.textContent = 'Platform Admin';
+        badge.textContent = 'Super Administrator';
+        badge.className = 'text-[10px] text-amber-400 font-mono';
+      }
+
+      showToast(`Switched Role View: ${role.toUpperCase()}`, `Displaying specialized UI layout and color accents for ${role}.`);
+    }
+
+    function setDuration(months) {
+      currentDuration = months;
+      [1, 2, 6].forEach(m => {
+        const btn = document.getElementById(`duration-btn-${m}`);
+        if (m === months) {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 border-indigo-500 bg-indigo-500/15 text-indigo-300 ring-1 ring-indigo-500';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600';
+        }
+      });
+
+      const badge = document.getElementById('active-duration-badge');
+      if (badge) {
+        badge.textContent = `${months} Month${months > 1 ? 's' : ''} Program`;
+      }
+
+      setView('explore');
+    renderRoadmap();
+      showToast(`Duration Track Selected: ${months} Month${months > 1 ? 's' : ''}`, `Curriculum milestones calibrated to ${months}-month schedule.`);
+    }
+
+    function showToast(title, message) {
+      const toast = document.getElementById('toast-banner');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    function handleStudentSubmission(e) {
+      e.preventDefault();
+      showToast('Code Submitted Successfully!', 'Dispatched to Dr. Sarah Jenkins for code review. Current SLA: ~24 hrs.');
+      const badge = document.getElementById('milestone-status-badge');
+      if (badge) {
+        badge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center space-x-1.5';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span><span>Submitted & Awaiting Trainer</span>';
+      }
+    }
+
+    function trainerApproveCode() {
+      showToast('Milestone Code Approved! ✓', 'Student credential unlocked. Signed off by Dr. Sarah Jenkins.');
+      const badge = document.getElementById('milestone-status-badge');
+      if (badge) {
+        badge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center space-x-1.5';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Approved & Verified ✓</span>';
+      }
+    }
+
+    function trainerRequestChanges() {
+      showToast('Revision Request Sent! ⚠️', 'Student Aarav Sharma has been notified to modify lines with comments.');
+      const badge = document.getElementById('milestone-status-badge');
+      if (badge) {
+        badge.className = 'px-3 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-400 border border-amber-500/40 flex items-center space-x-1.5';
+        badge.innerHTML = '<span>⚠️ Changes Requested by Trainer</span>';
+      }
+    }
+
+    function notifyTrainerTeamReview() {
+      showToast('Trainer Notification Dispatched', 'Marcus Thorne assigned to evaluate collective DevSquad Alpha sprint PRs.');
+    }
+
+    function togglePaletteModal() {
+      document.getElementById('palette-modal').classList.toggle('hidden');
+    }
+
+    let activeLoginRole = 'individual';
+    let activeLoginDuration = 2;
+
+    function toggleLoginModal() {
+      document.getElementById('login-modal').classList.toggle('hidden');
+    }
+
+    function setLoginTab(tab) {
+      activeLoginRole = tab;
+      const tabs = ['individual', 'group', 'trainer', 'admin'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`login-tab-${t}`);
+        const form = document.getElementById(`form-login-${t}`);
+        if (t === tab) {
+          form.classList.remove('hidden');
+          let activeClass = 'bg-cyan-600 text-white shadow-sm';
+          if (t === 'group') activeClass = 'bg-purple-600 text-white shadow-sm';
+          if (t === 'trainer') activeClass = 'bg-emerald-600 text-white shadow-sm';
+          if (t === 'admin') activeClass = 'bg-amber-600 text-white shadow-sm';
+          btn.className = `py-2 px-1 text-center rounded-lg text-[11px] font-semibold transition ${activeClass}`;
+        } else {
+          form.classList.add('hidden');
+          btn.className = 'py-2 px-1 text-center rounded-lg text-[11px] font-semibold transition text-slate-400 hover:text-white';
+        }
+      });
+    }
+
+    function selectLoginDuration(m) {
+      activeLoginDuration = m;
+      [1, 2, 6].forEach(dur => {
+        const btn = document.getElementById(`login-dur-${dur}`);
+        if (dur === m) {
+          btn.className = 'p-2 rounded-xl border text-center text-xs font-semibold border-indigo-500 bg-indigo-500/20 text-indigo-300';
+        } else {
+          btn.className = 'p-2 rounded-xl border text-center text-xs font-semibold border-slate-800 bg-slate-900 text-slate-400';
+        }
+      });
+    }
+
+    function handleAuthLogin(e, role) {
+      e.preventDefault();
+      toggleLoginModal();
+      setRole(role);
+      if (role === 'individual') {
+        setDuration(activeLoginDuration);
+        showToast('Authenticated as Individual Intern', `Enrolled in ${activeLoginDuration} Month track. Personal repo ready.`);
+      } else if (role === 'group') {
+        setDuration(6);
+        showToast('Authenticated as DevSquad Alpha', 'Collaborative engineering squad workspace unlocked.');
+      } else if (role === 'trainer') {
+        showToast('Authenticated as Dr. Sarah Jenkins', 'Trainer Review Console active. 3 PRs waiting in queue.');
+      } else if (role === 'admin') {
+        showToast('Super Admin Session Initiated', 'Operations hub access granted with root auditing permissions.');
+      }
+    }
+
+    function showGroupModal() {
+      showToast('Invite Peer', 'Team code #GRP-9402 copied to clipboard for your peers.');
+    }
+
+    function triggerCertAudit() {
+      showToast('Blockchain Audit', '892 student certificates verified against cryptographic signature registry.');
+    }
+
+    function downloadReport() {
+      showToast('Analytics Export', 'Cohort CSV generated with duration metrics and trainer review velocities.');
+    }
+
+    function toggleThemeMode() {
+      isDarkMode = !isDarkMode;
+      const body = document.getElementById('app-body');
+      const moon = document.getElementById('moon-icon');
+      const sun = document.getElementById('sun-icon');
+      
+      if (isDarkMode) {
+        body.classList.remove('bg-slate-50', 'text-slate-900');
+        body.classList.add('bg-[#090D16]', 'text-[#F8FAFC]');
+        moon.classList.remove('hidden');
+        sun.classList.add('hidden');
+        showToast('Dark Theme Engaged', 'Optimized for high-contrast syntax review.');
+      } else {
+        body.classList.remove('bg-[#090D16]', 'text-[#F8FAFC]');
+        body.classList.add('bg-slate-50', 'text-slate-900');
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+        showToast('Light Theme Engaged', 'Clean academic daylight contrast palette activated.');
+      }
+    }
+
+    setView('explore');
+    renderRoadmap();
+  </script>
+</body>
+</html>
